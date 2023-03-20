@@ -1,9 +1,15 @@
 ## Members 
 
-Anthony Keith,
-Nate Brown,
-Ryan Bagan,
-Deon Curry.
+Anthony Keith, https://github.com/AnthonyKeith15
+
+
+Nate Brown, https://github.com/nate-brown-1
+
+
+Ryan Bagan, https://github.com/Ryanb021
+
+
+Deon Curry.https://github.com/Curryfrom3
 
 ## Trello
 
