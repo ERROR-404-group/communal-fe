@@ -5,6 +5,10 @@ Nate Brown,
 Ryan Bagan,
 Deon Curry.
 
+## Trello
+
+https://trello.com/b/0bfYLmuI/communal
+
 ## Communal Music
 
 Playlist Making Website
