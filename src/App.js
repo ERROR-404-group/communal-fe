@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <>
           <Router>
-          <Header />
+          {/* <Header /> */}
           <Routes>
             <Route exact path="/" element={
               <Content />
@@ -34,7 +34,7 @@ class App extends React.Component {
             >
             </Route>
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </Router>
 
       </>

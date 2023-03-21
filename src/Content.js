@@ -1,7 +1,6 @@
 import { withAuth0 } from "@auth0/auth0-react";
 import React from 'react';
-import BestBooks from './BestBooks';
-import Welcome from './Welcome';
+// import Welcome from './Welcome';
 
 class Content extends React.Component {
 
@@ -9,12 +8,15 @@ class Content extends React.Component {
     console.log('content page is working');
     return (
       <>
-      {this.props.auth0.isAuthenticated ?
+      {this.props.auth0.isAuthenticated ? 
 
-        <BestBooks />
-        :
+        <h1>Hello</h1>:
+        <h2>Goodbye</h2>
+        // :
+        
 
-        <Welcome />}
+        // <Welcome />
+      }
       </>
     )
   }
