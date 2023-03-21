@@ -3,6 +3,7 @@ import React from 'react';
 import Search from "./components/Search";
 import Playlist from "./components/Playlist";
 import "./Content.css"; // import the CSS file
+import Welcome from './Welcome';
 
 class Content extends React.Component {
   render() {
@@ -10,15 +11,18 @@ class Content extends React.Component {
     return (
       <>
         {this.props.auth0.isAuthenticated ? 
-          <h1>Hello</h1> :
           <>
-            <div className="playlist-container">
+          <div className="playlist-container">
               <Playlist />
             </div>
             <div className="search-container">
             <Search />
-            </div>
-          </>
+            </div> 
+            </>
+            :
+       
+            <Welcome />
+          
         }
       </>
     )
@@ -26,3 +30,15 @@ class Content extends React.Component {
 }
 
 export default withAuth0(Content);
+
+// {this.props.auth0.isAuthenticated ? 
+//   <h1>Hello</h1> :
+// <>
+//     <div className="playlist-container">
+//       <Playlist />
+//     </div>
+//     <div className="search-container">
+//     <Search />
+//     </div>
+//   </>
+// }
