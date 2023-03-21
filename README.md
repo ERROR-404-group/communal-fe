@@ -43,7 +43,10 @@ The MVP would be a website that finds songs using the API and stores the playlis
 
 <img width="1680" alt="Screenshot 2023-03-20 at 10 42 40 AM" src="https://user-images.githubusercontent.com/122304970/226423429-de60d3fb-28c1-4091-95c1-7f16f8635beb.png">
 
-[Project Spotify.pdf](https://github.com/Curryfrom3/communal-fe/files/11021359/Project.Spotify.pdf)
+![Project Main Page](https://user-images.githubusercontent.com/120413183/226679739-15016bed-cefc-4af3-bed8-d7156aa40529.png)
+
+![Project Playlist Page](https://user-images.githubusercontent.com/120413183/226679760-da93ba41-fa55-4963-aa0c-d3da6516e7fc.png)
+
 
 
 
