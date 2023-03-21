@@ -145,6 +145,14 @@ class Playlist extends React.Component {
     this.setState({ playlistsArr: updatedPlaylistsArr });
   };
 
+  // function that handles deleting a playlist from the database and state
+  handleDeletePlaylist = (playlistId) => {
+    const { playlistsArr } = this.state;
+    const updatedPlaylistsArr = playlistsArr.filter(
+      (playlist) => playlist.id !== playlistId
+    );
+    this.setState({ playlistsArr: updatedPlaylistsArr });
+  };
 
   render() {
     return (
@@ -152,11 +160,12 @@ class Playlist extends React.Component {
         <h1>Playlist</h1>
         <button onClick={this.handleAddPlaylist}>Add Playlist</button>
         <ul>
-          {this.state.playlistsArr.map(playlist => (
-            <PlaylistItem 
-              key={playlist.id} 
-              playlist={playlist} 
-              onEdit={this.handleEditPlaylist} 
+          {this.state.playlistsArr.map((playlist) => (
+            <PlaylistItem
+              key={playlist.id}
+              playlist={playlist}
+              onEdit={this.handleEditPlaylist}
+              onDelete={() => this.handleDeletePlaylist(playlist.id)} // pass down handleDeletePlaylist as a prop
             />
           ))}
         </ul>
