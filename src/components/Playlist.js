@@ -1,4 +1,5 @@
 import React from "react";
+import './Playlist.css';
 
 class PlaylistItem extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class SongItem extends React.Component {
   render() {
     const { song } = this.props;
     return (
-      <li key={song.id}>
+      <li className="listed" key={song.id}>
         {song.name} - {song.artist} - {song.album}
       </li>
     );

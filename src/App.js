@@ -2,6 +2,9 @@ import React from 'react';
 import About from './About';
 import Profile from './Profile';
 import Content from './Content';
+import Header from './Header';
+import Footer from './Footer';
+import './App.css';
 
 import {
   BrowserRouter as Router,
@@ -15,7 +18,7 @@ class App extends React.Component {
     return (
       <>
           <Router>
-          {/* <Header /> */}
+         <Header />
           <Routes>
             <Route exact path="/" element={
               <Content />
@@ -34,7 +37,7 @@ class App extends React.Component {
             >
             </Route>
           </Routes>
-          {/* <Footer /> */}
+          <Footer />
         </Router>
 
       </>
