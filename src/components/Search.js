@@ -68,3 +68,25 @@ class Search extends Component {
 }
 
 export default Search;
+
+// if (this.props.auth0.isAuthenticated) {
+//   console.log('please work');
+//   const result = await this.props.auth0.getIdTokenClaims();
+//   console.log('Hello!');
+//   const jwt = result._raw;
+//   console.log(jwt);
+//   const configuration = {
+//     method: 'get',
+//     baseURL: process.env.REACT_APP_SERVER,
+//     url: '/',
+//     headers: {
+//       "Authorization": `Bearer ${jwt}`
+
+//     }
+//   }
+//   let results = await axios(configuration);
+//   console.log(results.data);
+//   this.setState({
+//     music: results.data,
+//     isEditing: false,
+// })
