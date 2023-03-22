@@ -94,6 +94,9 @@ class Search extends Component {
     try {
       let searchResults = await axios.get(`${process.env.REACT_APP_SERVER}/search?q=${this.state.searchTerm}`);
       console.log(searchResults.data);
+      this.setState({
+        songsReturnedArray: searchResults.data
+      });
     } catch (error) {
       console.log(error);
     }
