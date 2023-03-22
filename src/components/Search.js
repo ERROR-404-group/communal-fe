@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Search.css';
 
 class SongList extends React.Component {
@@ -87,13 +88,17 @@ class Search extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     // do something with the search term, such as send it to a search API
+    try {
+      let searchResults = await axios.get(`${process.env.REACT_APP_SERVER}/search?q=${this.state.searchTerm}`);
+      console.log(searchResults.data);
+    } catch (error) {
+      console.log(error);
+    }
     console.log(`Search term submitted: ${this.state.searchTerm}`);
   }
-
-  
 
   render() {
     return (
