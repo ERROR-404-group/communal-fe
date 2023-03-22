@@ -3,7 +3,7 @@ import React from 'react';
 import Search from "./components/Search";
 import Playlist from "./components/Playlist";
 import "./Content.css"; // import the CSS file
-import LogoutButton from "./components/LogoutButton";
+import LogoutButton from "./components/LogOutButton";
 
 class Content extends React.Component {
   constructor(props) {
