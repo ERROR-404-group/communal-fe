@@ -1,11 +1,54 @@
 import React, { Component } from 'react';
 import './Search.css';
 class SongList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dragging: false,
+    };
+  }
+
+  handleDrag = (e) => {
+    e.preventDefault();
+  }
+
+  handleDragStart = (e) => {
+    e.dataTransfer.setData('text', e.target.textContent);
+    console.log(e.target.textContent);
+    this.setState({
+      dragging: true
+    })
+  }
+
+  handleDragEnd = (e) => {
+    e.preventDefault();
+    // Needs this.state.hasAddedItem. Dont know why but it doesnt work without this half of the conditional
+    if(this.state.dropzone1Active === true && this.state.hasAddedItem){
+      this.handleAddItem1(e);
+      this.setState({ hasAddedItem: true });
+    } else if(this.state.dropzone2Active === true && this.state.hasAddedItem) {
+      this.handleAddItem2(e);
+      this.setState({ hasAddedItem: true });
+    }
+    this.setState({
+      dropzone1Active: false,
+      dropzone2Active: false,
+      dragging: false
+    })
+  }
+
+
   render() {
+    const { dragging } = this.state;
     return (
       <ul className='search-results'>
         {this.props.songs.map((song) => (
-          <li className='search-item' key={song.id}>
+          <li className={`search-item draggable ${dragging ? 'dragging' : ''}`} 
+          key={song.id}
+          draggable="true"
+          onDrag={this.handleDrag}
+          onDragEnd={this.handleDragEnd}
+          onDragStart={this.handleDragStart}>
             <p>{song.name}, {song.artist}, {song.album}</p>
             </li>
         ))}

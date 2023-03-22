@@ -6,7 +6,7 @@ class PlaylistItem extends React.Component {
     super(props);
     this.state = {
       isEditing: false,
-      newName: props.playlist.name
+      newName: props.playlist.name,
     };
   }
 
@@ -30,15 +30,23 @@ class PlaylistItem extends React.Component {
     this.props.onDelete(this.props.playlist.id);
   }
 
+  handleDragOver = (event) => {
+    console.log('Item is being dragged over:', this.props.playlist.name);
+  }
+
   render() {
     const { playlist } = this.props;
-    const { isEditing, newName } = this.state;
-  
+    const { isEditing, newName, isHovered } = this.state;
+
     // if the playlist is being edited, render the edit form
     if (isEditing) {
       return (
         <>
-          <li className='playlist-item' key={playlist.id}>
+          <li
+            className='playlist-item'
+            key={playlist.id}
+            onDragOver={this.handleDragOver}
+          >
             <form onSubmit={this.handleSubmit}>
               <input type="text" value={newName} onChange={this.handleNameChange} />
               <button type="submit">Save</button>
@@ -53,23 +61,31 @@ class PlaylistItem extends React.Component {
         </>
       );
     }
+
     // if the playlist is not being edited, render the normal playlist
     return (
-      <li className='playlist-item' key={playlist.id}>
+      <li
+        className='playlist-item'
+        key={playlist.id}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         <div className="playlist-header">
-        <h3>{playlist.name}</h3>
-        <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
-        <button type="button" onClick={() => this.props.onDelete(playlist.id)}>X</button> 
+          <h3>{playlist.name}</h3>
+          <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
+          <button type="button" onClick={() => this.props.onDelete(playlist.id)}>X</button> 
         </div>
         <ul className="list-of-songs">
           {playlist.songs.map(song => (
             <SongItem className='playlist-item' key={song.id} song={song} />
           ))}
         </ul>
+        {isHovered && <div>Hovering over playlist item</div>} {/* add a message to display when the item is being hovered over */}
       </li>
     );
   } 
 }
+
 
 
 
