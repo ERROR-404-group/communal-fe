@@ -128,12 +128,14 @@ class SongItem extends React.Component {
     const { song } = this.props;
     const { showDeleteButton } = this.state;
     return (
+
       <li
         className='song-item'
         key={song.id}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
+
         {song.name} - {song.artist} - {song.album}
         {showDeleteButton && (
           <button className='delete-button' onClick={() => this.props.onSongDelete(song.id)}>

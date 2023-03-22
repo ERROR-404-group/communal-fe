@@ -1,3 +1,4 @@
+
 .results-table {
   background-color: gray;
   width: 75%;
@@ -38,3 +39,4 @@ form {
 .search-item:nth-child(even) {
   background-color: white;
 }
+
