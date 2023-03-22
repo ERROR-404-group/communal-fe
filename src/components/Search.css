@@ -1,14 +1,42 @@
-.list {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.5rem;
-  color: #fff;
-  text-shadow:
-    0 0 7px #fff,
-    0 0 10px #fff,
-    0 0 21px #fff,
-    0 0 42px #0fa,
-    0 0 82px #0fa,
-    0 0 92px #0fa,
-    0 0 102px #0fa,
-    0 0 151px #0fa;
+
+.results-table {
+  background-color: gray;
+  width: 75%;
+  min-height: 50%;
+  margin: auto;
+  text-align: center;
+  margin-top: 20%;
+  padding: 30px;
 }
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: pink;
+  border-radius: 15px;
+  margin: auto;
+}
+
+.search-form input {
+  flex: 1 0 70%;
+}
+
+.search-form button {
+  width: 100%;
+  flex: 0 0 30%;
+}
+
+.search-item {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.search-item {
+  min-height: 100%;
+}
+
+.search-item:nth-child(even) {
+  background-color: white;
+}
+
