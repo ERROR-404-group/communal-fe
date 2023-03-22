@@ -43,6 +43,7 @@ class SongList extends React.Component {
 
 
   render() {
+    console.log(this.props.songs)
     const { dragging } = this.state;
     return (
       <ul className='search-results'>
