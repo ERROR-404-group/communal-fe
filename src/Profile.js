@@ -24,9 +24,8 @@ const Profile = () => {
     </div>
 
     <div className="right-side">
-
-    <h2 >TuneTastic
-    </h2>
+    <h2>TuneTastic</h2>
+    <h2>TuneTastic</h2>
     <p>With TuneTastic, you can easily browse through your music library and select your favorite songs, which can then be added to custom playlists that you create. </p>
     <LoginButton/>
     </div>
