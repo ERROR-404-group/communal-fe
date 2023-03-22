@@ -22,6 +22,10 @@ form {
   justify-content: space-between;
 }
 
+.song-list {
+  font-family: 'Comfortaa', 'Times New Roman', Times, serif;
+}
+
 input {
   min-width: 80%;
 }

@@ -121,7 +121,7 @@ class Search extends Component {
             />
           <button type="submit">Search</button>
         </form>
-        <SongList
+        <SongList className ="song-list"
         draggable
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd} 

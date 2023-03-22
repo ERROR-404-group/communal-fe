@@ -27,6 +27,8 @@
 }
 
 .right-side p {
+  margin-top:60px;
+  font-family: 'Comfortaa', 'Times New Roman', Times, serif;
   font-size: 1.2rem;
   width: 50%;
   line-height: 30px;
