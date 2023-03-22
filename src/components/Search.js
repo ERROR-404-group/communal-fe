@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 
+class SongList extends React.Component {
+  render() {
+    return (
+      <ul>
+        {this.props.songs.map((song) => (
+          <li key={song.id}>{song.name}, {song.artist}, {song.album}</li>
+        ))}
+      </ul>
+    );
+  }
+}
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -33,23 +45,21 @@ class Search extends Component {
     console.log(`Search term submitted: ${this.state.searchTerm}`);
   }
 
+  
+
   render() {
     return (
       <>
       <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-          />
-        <button type="submit">Search</button>
-      </form>
-      <ul>
-          {this.state.songsReturnedArray.map((song) => (
-            <li key={song.id}>{song.name}, {song.artist}, {song.album}</li>
-          ))}
-        </ul>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={this.state.searchTerm}
+            onChange={this.handleChange}
+            />
+          <button type="submit">Search</button>
+        </form>
+        <SongList songs={this.state.songsReturnedArray} />
           </>
       
     );

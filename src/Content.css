@@ -1,0 +1,15 @@
+#root {
+  display: flex;
+}
+
+.playlist-container {
+  height: 100vw;
+  width: 30%;
+  border: 1px solid blue;
+}
+
+.search-container {
+  height: 100vw;
+  width: 70%;
+  border: 1px solid red
+}
