@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-
+import './Search.css';
 class SongList extends React.Component {
   render() {
     return (
-      <ul>
+      <ul className='search-results'>
         {this.props.songs.map((song) => (
-          <li key={song.id}>{song.name}, {song.artist}, {song.album}</li>
+          <li className='search-item' key={song.id}>
+            <p>{song.name}, {song.artist}, {song.album}</p>
+            </li>
         ))}
       </ul>
     );
@@ -49,7 +51,7 @@ class Search extends Component {
 
   render() {
     return (
-      <>
+      <div className='results-table'>
       <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -60,7 +62,7 @@ class Search extends Component {
           <button type="submit">Search</button>
         </form>
         <SongList songs={this.state.songsReturnedArray} />
-          </>
+          </div>
       
     );
   }

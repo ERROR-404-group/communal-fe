@@ -1,4 +1,5 @@
 import React from "react";
+import './Playlist.css';
 
 class PlaylistItem extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class PlaylistItem extends React.Component {
     if (isEditing) {
       return (
         <>
-          <li key={playlist.id}>
+          <li className='playlist-item' key={playlist.id}>
             <form onSubmit={this.handleSubmit}>
               <input type="text" value={newName} onChange={this.handleNameChange} />
               <button type="submit">Save</button>
@@ -54,13 +55,15 @@ class PlaylistItem extends React.Component {
     }
     // if the playlist is not being edited, render the normal playlist
     return (
-      <li key={playlist.id}>
-        {playlist.name}
-        <button type="button" onClick={this.toggleEdit}>Edit</button>
-        <button type="button" onClick={() => this.props.onDelete(playlist.id)}>Delete</button> {/* Add this button element */}
-        <ul>
+      <li className='playlist-item' key={playlist.id}>
+        <div className="playlist-header">
+        <h3>{playlist.name}</h3>
+        <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
+        <button type="button" onClick={() => this.props.onDelete(playlist.id)}>X</button> 
+        </div>
+        <ul className="list-of-songs">
           {playlist.songs.map(song => (
-            <SongItem key={song.id} song={song} />
+            <SongItem className='playlist-item' key={song.id} song={song} />
           ))}
         </ul>
       </li>
@@ -74,7 +77,7 @@ class SongItem extends React.Component {
   render() {
     const { song } = this.props;
     return (
-      <li key={song.id}>
+      <li className='song-item'key={song.id}>
         {song.name} - {song.artist} - {song.album}
       </li>
     );
@@ -157,12 +160,13 @@ class Playlist extends React.Component {
   render() {
     return (
       <>
-        <h1>Playlist</h1>
-        <button onClick={this.handleAddPlaylist}>Add Playlist</button>
-        <ul>
+        <h1>Your Playlists</h1>
+        <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
+        <ul className="list-of-playlists">
           {this.state.playlistsArr.map((playlist) => (
             <PlaylistItem
               key={playlist.id}
+              className="playlist-item"
               playlist={playlist}
               onEdit={this.handleEditPlaylist}
               onDelete={() => this.handleDeletePlaylist(playlist.id)} // pass down handleDeletePlaylist as a prop
