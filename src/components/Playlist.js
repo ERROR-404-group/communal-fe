@@ -388,7 +388,14 @@ class Playlist extends React.Component {
     render() {
       return (
         <>
-          <h1>Your Playlists</h1>
+        <div className="container">
+          <h1 className="title">
+            <span className="title-word title-word-1">This </span>
+            <span className="title-word title-word-2">is </span>
+            <span className="title-word title-word-3">my </span>
+            <span className="title-word title-word-4">Playlist</span>
+            </h1>
+          </div>
           <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
           <ul className="list-of-playlists">
             {this.state.playlistsArr.map((playlist) => (
