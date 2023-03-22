@@ -458,7 +458,7 @@ class Playlist extends React.Component {
             />
           ))}
         </ul>
-        <div class="muzieknootjes">
+        <div className="muzieknootjes">
             <div class="noot-1">
               &#9835; &#9833;
             </div>

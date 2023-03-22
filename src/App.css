@@ -16,12 +16,13 @@ body {
 }
 .muzieknootjes {
   display: block;
-  margin: auto;
+  margin: 0 auto;
   position: relative;
   width: 50%;
   min-width: 300px;
   height: 100px;
   border: 0px solid #000;
+  margin-bottom: 50px;
 }
 
 .noot-1,
