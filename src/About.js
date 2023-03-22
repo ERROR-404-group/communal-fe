@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from "react";
+import './About.css';
 
 class Profile extends Component {
 

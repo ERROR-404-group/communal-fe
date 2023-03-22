@@ -13,7 +13,7 @@ class Header extends React.Component {
     return (
 
 
-      <><>
+      <>
         <Navbar className="bar" collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,24 +33,25 @@ class Header extends React.Component {
               </Nav>
             </Navbar.Collapse>
           </Container>
-          {/* PLACEHOLDER: render a navigation link to the about page */}
 
         </Navbar>
       </>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand>Spotify PlayList Maker</Navbar.Brand>
-          <NavItem><Link to="/" className="nav-link">Home</Link></NavItem>
-          <NavItem><Link to="/about" className="nav-link">About the Creators</Link></NavItem>
-          {/* PLACEHOLDER: render a navigation link to the about page */}
 
-        </Navbar></>
-
-    )
+        )
   }
 }
 
 
-export default withAuth0(Header);
+        export default withAuth0(Header);
 
 
-//export default Header;
+//         {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+//           <Navbar.Brand>Spotify PlayList Maker</Navbar.Brand>
+//           <NavItem><Link to="/" className="nav-link">Home</Link></NavItem>
+//           <NavItem><Link to="/about" className="nav-link">About the Creators</Link></NavItem>
+//           {/* PLACEHOLDER: render a navigation link to the about page */}
+
+//       </Navbar></>
+
+
+// //export default Header; */}

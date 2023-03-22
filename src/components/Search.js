@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import './Search.css';
 
 class SongList extends React.Component {
   render() {
     return (
       <ul>
         {this.props.songs.map((song) => (
-          <li key={song.id}>{song.name}, {song.artist}, {song.album}</li>
+          <li className="list" key={song.id}>{song.name}, {song.artist}, {song.album}</li>
         ))}
       </ul>
     );
