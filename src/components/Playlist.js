@@ -8,6 +8,7 @@ class PlaylistItem extends React.Component {
       isEditing: false,
       newName: props.playlist.name,
     };
+
   }
 
   handleNameChange = (event) => {
@@ -34,6 +35,18 @@ class PlaylistItem extends React.Component {
     console.log('Item is being dragged over:', this.props.playlist.name);
   }
 
+  onSongDelete = (id) => {
+    // Find the index of the song with the specified id
+    const index = this.props.playlist.songs.findIndex((song) => song.id === id);
+    
+    // If a song with the specified id exists in the playlist, remove it
+    if (index !== -1) {
+      const songs = [...this.props.playlist.songs]; // Make a copy of the songs array
+      songs.splice(index, 1); // Remove the song at the specified index
+      this.props.updatePlaylist({ ...this.props.playlist, songs }); // Update the playlist with the new array of songs
+    }
+  };
+  
   render() {
     const { playlist } = this.props;
     const { isEditing, newName, isHovered } = this.state;
@@ -67,8 +80,6 @@ class PlaylistItem extends React.Component {
       <li
         className='playlist-item'
         key={playlist.id}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
       >
         <div className="playlist-header">
           <h3>{playlist.name}</h3>
@@ -77,7 +88,7 @@ class PlaylistItem extends React.Component {
         </div>
         <ul className="list-of-songs">
           {playlist.songs.map(song => (
-            <SongItem className='playlist-item' key={song.id} song={song} />
+            <SongItem className='playlist-item' key={song.id} song={song} onSongDelete={this.onSongDelete} />
           ))}
         </ul>
         {isHovered && <div>Hovering over playlist item</div>} {/* add a message to display when the item is being hovered over */}
@@ -90,15 +101,50 @@ class PlaylistItem extends React.Component {
 
 
 class SongItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDeleteButton: false
+    };
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
+  }
+
+  handleMouseEnter() {
+    this.setState({ showDeleteButton: true });
+  }
+
+  handleMouseLeave() {
+    this.setState({ showDeleteButton: false });
+  }
+
+  handleDeleteClick() {
+    const { song, onDelete } = this.props;
+    onDelete(song.id);
+  }
+
   render() {
     const { song } = this.props;
+    const { showDeleteButton } = this.state;
     return (
-      <li className='song-item'key={song.id}>
+      <li
+        className='song-item'
+        key={song.id}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         {song.name} - {song.artist} - {song.album}
+        {showDeleteButton && (
+          <button className='delete-button' onClick={() => this.props.onSongDelete(song.id)}>
+          X
+        </button>
+        )}
       </li>
     );
   }
 }
+
 
 
 
@@ -151,6 +197,13 @@ class Playlist extends React.Component {
     });
   };
 
+  updatePlaylist = (updatedPlaylist) => {
+    const { playlistsArr } = this.state;
+    const updatedPlaylistsArr = playlistsArr.map((playlist) =>
+      playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
+    );
+    this.setState({ playlistsArr: updatedPlaylistsArr });
+  };
   // helper function that handles the playlist name change
   handleNewPlaylistNameChange = (event) => {
     this.setState({ newPlaylistName: event.target.value });
@@ -184,6 +237,7 @@ class Playlist extends React.Component {
               key={playlist.id}
               className="playlist-item"
               playlist={playlist}
+              updatePlaylist={this.updatePlaylist}
               onEdit={this.handleEditPlaylist}
               onDelete={() => this.handleDeletePlaylist(playlist.id)} // pass down handleDeletePlaylist as a prop
             />
