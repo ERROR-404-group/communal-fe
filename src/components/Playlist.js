@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withAuth0 } from '@auth0/auth0-react';
 import './Playlist.css';
 
 const SERVER = process.env.REACT_APP_SERVER;
@@ -204,11 +205,6 @@ class Playlist extends React.Component {
   }
 
 
-  // let testPlaylist = {
-
-  // }
-
-
   // function that handles adding a new playlist to the database.
   postPlaylist = async (newPlaylist) => {
     try {
@@ -221,7 +217,7 @@ class Playlist extends React.Component {
       // declare config with headers for axios request
       const config = {
         method: 'post',
-        baseURL: process.env.REACT_APP_SERVER,
+        baseURL: SERVER,
         url: '/playlists',
         headers: {
           "Authorization": `Bearer ${jwt}`
@@ -276,10 +272,13 @@ class Playlist extends React.Component {
         // console log results
         console.log(playlistResults.data);
         console.log('playlist fetched!');
+        this.setState({
+          playlistsArr: playlistResults.data
+        });
     } catch (error) {
       console.log(error);
-    }
-  }}
+    }}
+  }
   
     // TODO: function that will update the playlist name in the database
 
@@ -342,8 +341,11 @@ class Playlist extends React.Component {
       handleDrop(activePlaylistId, draggedItem, this.state.playlistsArr);
     }
 
-    render() {
+    componentDidMount() {
       this.getPlaylist();
+    }
+
+    render() {
       return (
         <>
           <h1>Your Playlists</h1>
@@ -370,4 +372,4 @@ class Playlist extends React.Component {
     }
   }
 
-export default Playlist;
+export default withAuth0(Playlist);
