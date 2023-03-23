@@ -101,7 +101,7 @@ class PlaylistItem extends React.Component {
           <>
             <div className="playlist-header">
               <h3>{playlist.name}</h3>
-              <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
+              <button type="button" onClick={this.toggleEdit}>Edit </button>
               <button type="button" onClick={() => this.props.onDelete(playlist.id)}>X</button>
             </div>
             <ul className="list-of-songs">
