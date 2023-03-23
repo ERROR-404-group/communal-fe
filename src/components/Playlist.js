@@ -326,10 +326,10 @@ class Playlist extends React.Component {
           },
         }
         // PUT playlist to database with above config
-        let put = await axios(config);
-        console.log(put.data);
-        console.log(`playlist ${pl_id} renamed in database`);
-        this.getPlaylist();
+        let putName = await axios(config);
+        // console.log(put.data);
+        // console.log(`playlist ${pl_id} renamed in database`);
+        console.log(putName);
       } catch (error) {
         console.log(error.response)
       }
@@ -345,7 +345,7 @@ class Playlist extends React.Component {
       );
       let rpl = updatedPlaylistsArr.filter(playlist => playlist._id === playlistId);
       console.log(rpl)
-      this.editPlaylistName(playlistId, rpl);
+      this.editPlaylistName(playlistId, rpl[0]);
       this.setState({ playlistsArr: updatedPlaylistsArr });
     };
 
