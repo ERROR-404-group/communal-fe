@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { withAuth0 } from '@auth0/auth0-react';
 import LoginButton from './components/LoginButton';
-import LogOutButton from './components/LogOutButton';
+import LogOutButton from './components/LogoutButton';
 import './Header.css';
 
 

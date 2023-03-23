@@ -2,52 +2,74 @@
 /*
 Individual playlist items. Includes edit and delete buttons
 */
-h1 {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 3rem;
-  color: #fff;
-  text-shadow:
-    0 0 7px #fff,
-    0 0 10px #fff,
-    0 0 21px #fff,
-    0 0 42px #0fa,
-    0 0 82px #0fa,
-    0 0 92px #0fa,
-    0 0 102px #0fa,
-    0 0 151px #0fa;
+
+.playlist-container {
+  border-right: 1px solid black;
+}
+button {
+  cursor: pointer;
+}
+
+
+.playlist-container .add-btn{
+  margin: 20px;
 }
 
 .playlist-item {
-  background-color: rgb(242, 242, 242);
+  background-color: #d27f60;
   padding: 10px;
   margin-bottom: 10px;
-  border-radius: 5px;
-  max-width: 20vw;
+  border-radius: 10px;
+  max-width: 30vw;
   list-style: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: 1px solid black;
 
 }
 
 .playlist-header {
   display: flex;
   align-items: center;
+  margin: 10px;
+  background-color: pink;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid black;
 }
 
 .playlist-header h3 {
   margin-right: auto;
+  font-size: 1.5rem;
+}
+
+.list-of-playlists{
+  min-width: 75%;
+  overflow: auto;
+
 }
 
 .list-of-songs {
   list-style: none;
-  background-color: rgba(255, 192, 203, 1);
+  background-color: #c38a5d;
+  gap: 5px;
+
 }
 
-.list-of-songs .song-item:nth-child(even) {
-  background-color: #e34e4e; /* Lighter shade of pink */
+.song-item:nth-child(even) {
+  background-color: #ffc190; 
 }
 
 .song-item {
   width: 100%;
+  background-color: #fae4a8;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.draggable:hover {
+  cursor: pointer;
 }

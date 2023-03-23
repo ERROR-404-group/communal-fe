@@ -1,5 +1,5 @@
 .results-table {
-  background-color: gray;
+  background-color: #d27f60;
   width: 75%;
   min-height: 50%;
   margin: auto;
@@ -7,6 +7,7 @@
   margin-top: 20%;
   padding: 30px;
   border-radius: 15px;
+  border: 1px solid black;
 }
 
 form {
@@ -17,20 +18,27 @@ form {
   border-radius: 15px;
   margin: auto;
   border-radius: 15px;
+  border: 1px solid black;
+  justify-content: space-between;
 }
 
-.search-form input {
-  flex: 1 0 70%;
+input {
+  min-width: 80%;
 }
 
-.search-form button {
-  width: 100%;
-  flex: 0 0 30%;
+form button {
+  min-width: 20%;
 }
 
 .search-item {
   list-style: none;
-  margin: 10px 0;
+  width: 100%;
+  background-color: #fae4a8;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 5px;
+
 }
 
 .search-item {
@@ -38,12 +46,7 @@ form {
 }
 
 .search-item:nth-child(even) {
-  background-color: #ffffff;
-  
+  background-color: #ffc190; 
 }
 
-p {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.3rem;
-  color: black;
-}
+

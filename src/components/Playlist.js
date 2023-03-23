@@ -101,8 +101,10 @@ class PlaylistItem extends React.Component {
           <>
             <div className="playlist-header">
               <h3>{playlist.name}</h3>
+
               <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
               <button type="button" onClick={() => this.props.onDelete(playlist._id)}>X</button>
+
             </div>
             <ul className="list-of-songs">
               {playlist.songs.map(song => (
@@ -150,7 +152,7 @@ class SongItem extends React.Component {
 
       <li
         className='song-item'
-        key={song.id}
+        key={song.id + 10}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -228,6 +230,7 @@ class Playlist extends React.Component {
         },
       }
       // POST playlist to database with above config
+
       let post = await axios(config);
       console.log(post);
       // console.log(createdPlaylist.data);
