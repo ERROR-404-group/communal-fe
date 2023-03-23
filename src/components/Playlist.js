@@ -202,11 +202,34 @@ class Playlist extends React.Component {
       newPlaylistName: "Your New Playlist",
     };
   }
+
+
+  // let testPlaylist = {
+
+  // }
+
+
   // function that handles adding a new playlist to the database.
   postPlaylist = async (newPlaylist) => {
     try {
-      let url = `${SERVER}/playlists`;
-      let createdPlaylist = await axios.post(url, newPlaylist);
+      // get a token from Auth0
+      const res = await this.props.auth0.getIdTokenClaims();
+      // JWT is the raw part of the token
+      const jwt = res.__raw;
+      // log the token
+      console.log(jwt);
+      // declare config with headers for axios request
+      const config = {
+        method: 'post',
+        baseURL: process.env.REACT_APP_SERVER,
+        url: '/playlists',
+        headers: {
+          "Authorization": `Bearer ${jwt}`
+        },
+        data: newPlaylist
+      }
+      // POST playlist to database with above config
+      const createdPlaylist = await axios.post(config);
       console.log(createdPlaylist.data);
       (console.log('I created a new playlist'))
     } catch (error) {
@@ -215,7 +238,6 @@ class Playlist extends React.Component {
   }
   // function that handles adding a playlist to state.
   handleAddPlaylist = () => {
-    this.postPlaylist();
     const { playlistsArr, newPlaylistName } = this.state;
     const newPlaylist = {
       id: playlistsArr.length + 5,
@@ -223,6 +245,7 @@ class Playlist extends React.Component {
       songs: [],
       createdBy: this.props.userToken.email
     };
+    this.postPlaylist(newPlaylist);
     const updatedPlaylistsArr = [...playlistsArr, newPlaylist];
     this.setState({
       playlistsArr: updatedPlaylistsArr,
@@ -231,14 +254,33 @@ class Playlist extends React.Component {
 
   // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets evoked in render. This will handle update, delete and read
   getPlaylist = async () => {
-
-      let url = `${process.env.REACT_APP_SERVER}/playlists`;
-      let playlistResults = await axios.get(url);
-      console.log('playlist fetched!')
+    if (this.props.auth0.isAuthenticated) {
+      try {
+        // get a token from Auth0
+        const res = await this.props.auth0.getIdTokenClaims();
+        // JWT is the raw part of the token
+        const jwt = res.__raw;
+        // log the token
+        console.log(jwt);
+        // declare config with headers for axios request
+        const config = {
+          method: 'get',
+          baseURL: process.env.REACT_APP_SERVER,
+          url: '/playlists',
+          headers: {
+            "Authorization": `Bearer ${jwt}`
+          }
+        }
+        // receive results of axios request using above config
+        const playlistResults = await axios(config);
+        // console log results
+        console.log(playlistResults.data);
+        console.log('playlist fetched!');
+    } catch (error) {
+      console.log(error);
     }
+  }}
   
-
-
     // TODO: function that will update the playlist name in the database
 
     updatePlaylist = (updatedPlaylist) => {
