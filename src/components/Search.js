@@ -87,12 +87,10 @@ class Search extends Component {
     // do something with the search term, such as send it to a search API
     try {
       let searchResults = await axios.get(`${process.env.REACT_APP_SERVER}/search?q=${this.state.searchTerm}`);
-      console.log(searchResults.data);
       this.setState({ songsReturnedArray: searchResults.data });
     } catch (error) {
       console.log(error);
     }
-    console.log(`Search term submitted: ${this.state.searchTerm}`);
   }
 
   handleDragStart = () => {
