@@ -18,6 +18,7 @@
 
 ### macOS ###
 # General
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -46,6 +47,8 @@ Temporary Items
 
 ### Node ###
 # Logs
+.env
+.index.js
 logs
 *.log
 npm-debug.log*

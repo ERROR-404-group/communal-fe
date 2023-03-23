@@ -3,27 +3,68 @@ import React from 'react';
 import Search from "./components/Search";
 import Playlist from "./components/Playlist";
 import "./Content.css"; // import the CSS file
-import Welcome from './Welcome';
 
 class Content extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isZoneActive: false,
+      activePlaylistId: '',
+      itemBeingDragged: null,
+    };
+  }
+
+  handleZoneHover = () => {
+    this.setState({ isZoneActive: true });
+  }
+
+  handleZoneLeave = () => {
+    this.setState({ isZoneActive: false });
+  }
+
+  handleDragStart = (item) => {
+    this.setState({ itemBeingDragged: item });
+  }
+
+  handlePlaylistIdChange = (playlistId) => {
+    this.setState({ activePlaylistId: playlistId });
+  }
+
+  // function to update the playlist will be called here when the user drops a song into a playlist.
+
+  handleDrop = (playlistId, playlists) => {
+    console.log('im when the user drops a song')
+    playlists.playlist.songs.push(this.state.itemBeingDragged);
+    this.setState({ itemBeingDragged: null });
+  }
+
+
   render() {
-    console.log('content page is working');
     return (
       <>
-        {this.props.auth0.isAuthenticated ? 
           <>
           <div className="playlist-container">
-              <Playlist />
+              <Playlist 
+              onEnter={this.handleZoneHover}
+              onExit={this.handleZoneLeave}
+              onChange={this.handlePlaylistIdChange}
+              draggedItem={this.state.itemBeingDragged}
+              activePlaylistId={this.state.activePlaylistId}
+              handleDrop={this.handleDrop}
+              auth0={this.props.auth0.isAuthenticated}
+              userToken={this.props.auth0.user}/>
             </div>
             <div className="search-container">
-            <Search />
+            <Search 
+            setIsDragging={this.handleZoneHover}
+            dragStart={this.handleDragStart}
+            abovePlaylist={this.state.isZoneActive}
+            />
             </div> 
             </>
-            :
-       
-            <Welcome />
+
           
-        }
+        
       </>
     )
   }

@@ -10,14 +10,8 @@ const Profile = () => {
   }
 
   return (
-    isAuthenticated && (
-      <div>
-        <img src={user.picture} alt={user.name} />
-        <h2 className="name">{user.name}</h2>
-        <p>{user.email}</p>
-      </div>
+    <h2>Hello There</h2>
     )
-  );
 };
 
 export default Profile;

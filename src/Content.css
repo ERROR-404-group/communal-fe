@@ -2,7 +2,6 @@
   display: flex;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
 }
 
 body {
@@ -11,13 +10,12 @@ body {
 }
 
 .playlist-container {
-  min-height: 100%;
   width: 30%;
   border: 1px solid blue;
+  overflow: scroll;
 }
 
 .search-container {
-  min-height: 100%;
   width: 70%;
   border: 1px solid red;
   background: red;

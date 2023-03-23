@@ -12,29 +12,31 @@ class SongList extends React.Component {
 
   handleDrag = (e) => {
     e.preventDefault();
+    if (this.props.abovePlaylist === true) {
+      console.log('Playlist Below');
+    }
   }
 
-  handleDragStart = (e) => {
-    e.dataTransfer.setData('text', e.target.textContent);
-    console.log(e.target.textContent);
+  handleDragStart = (e, myObject) => {
+    this.props.dragStart(myObject);
+    e.dataTransfer.setData('application/json', JSON.stringify(myObject));
     this.setState({
       dragging: true
-    })
+    });
   }
 
   handleDragEnd = (e) => {
     e.preventDefault();
-    // Needs this.state.hasAddedItem. Dont know why but it doesnt work without this half of the conditional
-    if(this.state.dropzone1Active === true && this.state.hasAddedItem){
-      this.handleAddItem1(e);
-      this.setState({ hasAddedItem: true });
-    } else if(this.state.dropzone2Active === true && this.state.hasAddedItem) {
-      this.handleAddItem2(e);
-      this.setState({ hasAddedItem: true });
-    }
+    
     this.setState({
-      dropzone1Active: false,
-      dropzone2Active: false,
+      dragging: false
+    })
+  }
+
+  handleDrop = (e) => {
+    e.preventDefault();
+
+    this.setState({
       dragging: false
     })
   }
@@ -51,8 +53,11 @@ class SongList extends React.Component {
           draggable="true"
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}
-          onDragStart={this.handleDragStart}>
-            <p>{song.name}, {song.artist}, {song.album}</p>
+          onDragStart={(e) => this.handleDragStart(e, song)}
+          onDrop={this.handleDrop}
+          
+          >
+            <p>{song.title}, {song.artist}, {song.album}</p>
             </li>
 
         ))}
@@ -67,18 +72,7 @@ class Search extends Component {
     this.state = {
       searchTerm: '',
       // This array will get populated with the axios.get results from the handleSubmit function
-      songsReturnedArray: [
-        { id: 1, name: 'Item 1' , artist: 'Artist 1', album: 'Album 1' },
-        { id: 2, name: 'Item 2', artist: 'Artist 2', album: 'Album 2' },
-        { id: 3, name: 'Item 3', artist: 'Artist 3', album: 'Album 3' },
-        { id: 4, name: 'Item 4', artist: 'Artist 4', album: 'Album 4' },
-        { id: 5, name: 'Item 5', artist: 'Artist 5', album: 'Album 5' },
-        { id: 6, name: 'Item 6', artist: 'Artist 6', album: 'Album 6' },
-        { id: 7, name: 'Item 7', artist: 'Artist 7', album: 'Album 7' },
-        { id: 8, name: 'Item 8', artist: 'Artist 8', album: 'Album 8' },
-        { id: 9, name: 'Item 9', artist: 'Artist 9', album: 'Album 9' },
-        { id: 10, name: 'Item 10', artist: 'Artist 10', album: 'Album 10' },
-      ],
+      songsReturnedArray: [],
     };
 
   }
@@ -93,11 +87,20 @@ class Search extends Component {
     // do something with the search term, such as send it to a search API
     try {
       let searchResults = await axios.get(`${process.env.REACT_APP_SERVER}/search?q=${this.state.searchTerm}`);
-      console.log(searchResults.data);
+      this.setState({ songsReturnedArray: searchResults.data });
     } catch (error) {
       console.log(error);
     }
-    console.log(`Search term submitted: ${this.state.searchTerm}`);
+  }
+
+  handleDragStart = () => {
+    const { setIsDragging } = this.props;
+    setIsDragging(true);
+  }
+
+  handleDragEnd = () => {
+    const { setIsDragging } = this.props;
+    setIsDragging(false);
   }
 
   render() {
@@ -112,7 +115,13 @@ class Search extends Component {
             />
           <button type="submit">Search</button>
         </form>
-        <SongList songs={this.state.songsReturnedArray} />
+        <SongList
+        draggable
+        onDragStart={this.handleDragStart}
+        onDragEnd={this.handleDragEnd} 
+        songs={this.state.songsReturnedArray} 
+        dragStart={this.props.dragStart}
+        />
           </div>
       
     );

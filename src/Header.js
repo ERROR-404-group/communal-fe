@@ -3,8 +3,8 @@ import { Navbar, NavItem, Nav, Container } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 import { withAuth0 } from '@auth0/auth0-react';
-import LoginButton from './LoginButton';
-import LogOutButton from './LogOutButton';
+import LoginButton from './components/LoginButton';
+import LogOutButton from './components/LogOutButton';
 import './Header.css';
 
 
