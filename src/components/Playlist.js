@@ -180,11 +180,11 @@ class Playlist extends React.Component {
           name: "Music",
           createdBy: 'Anthony Keith',
           songs: [
-            { id: 1, name: 'Item 1', artist: 'Artist 1', album: 'Album 1' },
-            { id: 2, name: 'Item 2', artist: 'Artist 2', album: 'Album 2' },
-            { id: 3, name: 'Item 3', artist: 'Artist 3', album: 'Album 3' },
-            { id: 4, name: 'Item 4', artist: 'Artist 4', album: 'Album 4' },
-            { id: 5, name: 'Item 5', artist: 'Artist 4', album: 'Album 4' },
+            { id: 1, title: 'Item 1', artist: 'Artist 1', album: 'Album 1' },
+            { id: 2, title: 'Item 2', artist: 'Artist 2', album: 'Album 2' },
+            { id: 3, title: 'Item 3', artist: 'Artist 3', album: 'Album 3' },
+            { id: 4, title: 'Item 4', artist: 'Artist 4', album: 'Album 4' },
+            { id: 5, title: 'Item 5', artist: 'Artist 4', album: 'Album 4' },
           ]
         },
         {
@@ -192,11 +192,11 @@ class Playlist extends React.Component {
           name: "Also Music",
           createdBy: 'Tom Cruise',
           songs: [
-            { id: 1, name: 'Song 1', artist: 'Artist 1', album: 'Album 1' },
-            { id: 2, name: 'Song 2', artist: 'Artist 2', album: 'Album 2' },
-            { id: 3, name: 'Song 3', artist: 'Artist 3', album: 'Album 3' },
-            { id: 4, name: 'Song 4', artist: 'Artist 4', album: 'Album 4' },
-            { id: 5, name: 'Song 5', artist: 'Artist 4', album: 'Album 4' },
+            { id: 1, title: 'Song 1', artist: 'Artist 1', album: 'Album 1' },
+            { id: 2, title: 'Song 2', artist: 'Artist 2', album: 'Album 2' },
+            { id: 3, title: 'Song 3', artist: 'Artist 3', album: 'Album 3' },
+            { id: 4, title: 'Song 4', artist: 'Artist 4', album: 'Album 4' },
+            { id: 5, title: 'Song 5', artist: 'Artist 4', album: 'Album 4' },
           ]
         },
       ],
@@ -207,27 +207,29 @@ class Playlist extends React.Component {
 
   // function that handles adding a new playlist to the database.
   postPlaylist = async (newPlaylist) => {
+    let pl = newPlaylist;
+    console.log(pl);
     try {
       // get a token from Auth0
       const res = await this.props.auth0.getIdTokenClaims();
       // JWT is the raw part of the token
       const jwt = res.__raw;
       // log the token
-      console.log(jwt);
+      // console.log(jwt);
       // declare config with headers for axios request
       const config = {
         method: 'post',
         baseURL: SERVER,
         url: '/playlists',
         headers: {
-          "Authorization": `Bearer ${jwt}`
+          "Authorization": `Bearer ${jwt}`,
+          "Data": `${pl}`
         },
-        data: newPlaylist
       }
       // POST playlist to database with above config
-      const createdPlaylist = await axios.post(config);
-      console.log(createdPlaylist.data);
-      (console.log('I created a new playlist'))
+      await axios(config);
+      // console.log(createdPlaylist.data);
+      console.log('I created a new playlist')
     } catch (error) {
       console.log(error.response)
     }
@@ -236,11 +238,12 @@ class Playlist extends React.Component {
   handleAddPlaylist = () => {
     const { playlistsArr, newPlaylistName } = this.state;
     const newPlaylist = {
-      id: playlistsArr.length + 5,
+      // id: playlistsArr.length + 5,
       name: newPlaylistName,
       songs: [],
       createdBy: this.props.userToken.email
     };
+    // console.log(newPlaylist);
     this.postPlaylist(newPlaylist);
     const updatedPlaylistsArr = [...playlistsArr, newPlaylist];
     this.setState({
@@ -264,7 +267,8 @@ class Playlist extends React.Component {
           baseURL: process.env.REACT_APP_SERVER,
           url: '/playlists',
           headers: {
-            "Authorization": `Bearer ${jwt}`
+            "Authorization": `Bearer ${jwt}`,
+            "From": `${this.props.userToken.email}`
           }
         }
         // receive results of axios request using above config
