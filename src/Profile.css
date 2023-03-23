@@ -111,6 +111,7 @@ img {
   transform: translate(-50%, -50%);
   margin-bottom: 200px;
   margin-left:430px;
+  text-shadow: rgba(2, 0, 0, 0.171) 12px 10px 2px;
 }
 
 .right-side h2:nth-child(1) {
