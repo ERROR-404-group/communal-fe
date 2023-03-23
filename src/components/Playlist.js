@@ -232,6 +232,7 @@ class Playlist extends React.Component {
       console.log(post);
       // console.log(createdPlaylist.data);
       console.log('I created a new playlist')
+      this.getPlaylist();
     } catch (error) {
       console.log(error.response)
     }
@@ -333,9 +334,11 @@ class Playlist extends React.Component {
           },
         }
         // POST playlist to database with above config
-        await axios(config);
+        let deletedList = await axios(config);
+        console.log(deletedList);
         // console.log(createdPlaylist.data);
         console.log('Playlist deleted from database')
+        this.getPlaylist();
       } catch (error) {
         console.log(error.response)
       }
