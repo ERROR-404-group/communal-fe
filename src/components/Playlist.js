@@ -286,12 +286,13 @@ class Playlist extends React.Component {
         this.setState({
           playlistsArr: playlistResults.data
         });
-    } catch (error) {
-      console.log(error);
-    }}
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
-  
-    // TODO: function that will update the playlist name in the database
+
+  // TODO: function that will update the playlist name in the database
 
     updatePlaylist = (updatedPlaylist) => {
       const { playlistsArr } = this.state;
@@ -388,75 +389,91 @@ class Playlist extends React.Component {
     handleDeletePlaylist = (playlistId) => {
       console.log('I deleted the playlist');
 
-      const { playlistsArr } = this.state;
-      const updatedPlaylistsArr = playlistsArr.filter(
-        (playlist) => playlist._id !== playlistId
-      );
-      this.deletePlaylist(playlistId);
-      this.setState({ playlistsArr: updatedPlaylistsArr });
-    };
+    const { playlistsArr } = this.state;
+    const updatedPlaylistsArr = playlistsArr.filter(
+      (playlist) => playlist._id !== playlistId
+    );
+    this.deletePlaylist(playlistId);
+    this.setState({ playlistsArr: updatedPlaylistsArr });
+  };
 
     handleAddItemToPlaylist = (playlistId, item) => {
       // Find the playlist with the matching ID
       const playlist = this.state.playlistsArr.find((p) => p._id === playlistId);
 
-      // If a matching playlist is found, push the new item to its array of items
-      if (playlist) {
-        console.log(`Added ${item.name} to playlist ${playlist.name}`);
-      } else {
-        console.log(`Could not find playlist with ID ${playlistId}`);
-      }
-
-      // Clear the dragged item and active playlist ID from state
-      this.setState({ itemBeingDragged: null, activePlaylistId: '' });
+    // If a matching playlist is found, push the new item to its array of items
+    if (playlist) {
+      console.log(`Added ${item.name} to playlist ${playlist.name}`);
+    } else {
+      console.log(`Could not find playlist with ID ${playlistId}`);
     }
 
-    handleDragOver = (event) => {
-      event.preventDefault();
-    }
+    // Clear the dragged item and active playlist ID from state
+    this.setState({ itemBeingDragged: null, activePlaylistId: '' });
+  }
 
-    handleDropEvent = (event) => {
-      event.preventDefault();
-      const { handleDrop, draggedItem, activePlaylistId } = this.props;
-      handleDrop(activePlaylistId, draggedItem, this.state.playlistsArr);
-    }
+  handleDragOver = (event) => {
+    event.preventDefault();
+  }
 
-    componentDidMount() {
-      this.getPlaylist();
-    }
+  handleDropEvent = (event) => {
+    event.preventDefault();
+    const { handleDrop, draggedItem, activePlaylistId } = this.props;
+    handleDrop(activePlaylistId, draggedItem, this.state.playlistsArr);
+  }
 
-    render() {
-      return (
-        <>
+  componentDidMount() {
+    this.getPlaylist();
+  }
+
+  render() {
+    return (
+      <>
         <div className="container">
           <h1 className="title">
             <span className="title-word title-word-1">This </span>
             <span className="title-word title-word-2">is </span>
             <span className="title-word title-word-3">my </span>
             <span className="title-word title-word-4">Playlist</span>
-            </h1>
+          </h1>
+        </div>
+        
+        <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
+        <ul className="list-of-playlists">
+          {this.state.playlistsArr.map((playlist) => (
+            <PlaylistItem
+              onDragOver={this.handleDragOver}
+              onDrop={this.props.handleDrop}
+              key={playlist.id}
+              className="playlist-item"
+              playlist={playlist}
+              updatePlaylist={this.updatePlaylist}
+              onEdit={this.handleEditPlaylist}
+              onDelete={() => this.handleDeletePlaylist(playlist._id)}
+              onEnter={this.props.onEnter}
+              onExit={this.props.onExit}
+              onChange={this.props.onChange}
+            />
+          ))}
+        </ul>
+        <div class="muzieknootjes">
+            <div class="noot-1">
+              &#9835; &#9833;
+            </div>
+            <div class="noot-2">
+              &#9833;
+
+            </div>
+            <div class="noot-3">
+              &#9839; &#9834;
+            </div>
+            <div class="noot-4">
+              &#9834;
+            </div>
           </div>
-          <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
-          <ul className="list-of-playlists">
-            {this.state.playlistsArr.map((playlist) => (
-              <PlaylistItem
-                onDragOver={this.handleDragOver}
-                onDrop={this.props.handleDrop}
-                key={playlist.id}
-                className="playlist-item"
-                playlist={playlist}
-                updatePlaylist={this.updatePlaylist}
-                onEdit={this.handleEditPlaylist}
-                onDelete={() => this.handleDeletePlaylist(playlist._id)}
-                onEnter={this.props.onEnter}
-                onExit={this.props.onExit}
-                onChange={this.props.onChange}
-              />
-            ))}
-          </ul>
-        </>
-      );
-    }
+      </>
+    );
   }
+}
 
 export default withAuth0(Playlist);
