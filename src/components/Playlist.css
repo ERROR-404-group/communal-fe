@@ -2,9 +2,23 @@
 /*
 Individual playlist items. Includes edit and delete buttons
 */
+h1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 3rem;
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 102px #0fa,
+    0 0 151px #0fa;
+}
 
 .playlist-item {
-  background-color: #f2f2f2;
+  background-color: rgb(242, 242, 242);
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -37,5 +51,3 @@ Individual playlist items. Includes edit and delete buttons
 .song-item {
   width: 100%;
 }
-
-

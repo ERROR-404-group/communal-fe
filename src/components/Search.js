@@ -139,7 +139,7 @@ export default Search;
 //   const configuration = {
 //     method: 'get',
 //     baseURL: process.env.REACT_APP_SERVER,
-//     url: '/',
+//     url: '/playlists',
 //     headers: {
 //       "Authorization": `Bearer ${jwt}`
 
