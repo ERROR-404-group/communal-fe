@@ -49,7 +49,7 @@ class SongList extends React.Component {
         {this.props.songs.map((song) => (
 
           <li className={`search-item draggable ${dragging ? 'dragging' : ''}`} 
-          key={song.id}
+          key={this.props.songs.length + 7}
           draggable="true"
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}

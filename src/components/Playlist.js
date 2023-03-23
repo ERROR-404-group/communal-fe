@@ -150,7 +150,7 @@ class SongItem extends React.Component {
 
       <li
         className='song-item'
-        key={song.id}
+        key={song.id + 10}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >

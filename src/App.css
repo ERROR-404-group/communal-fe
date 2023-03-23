@@ -5,12 +5,5 @@
 }
 
 body {
-  background-image: url(../public/Music\ 5.jpg);
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
+  background-color: #fff2d7;
 }
