@@ -10,7 +10,7 @@ class PlaylistItem extends React.Component {
     super(props);
     this.state = {
       isEditing: false,
-      newName: props.playlist.title,
+      newName: props.playlist.name,
       isHovered: false,
     };
 
@@ -27,7 +27,7 @@ class PlaylistItem extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // function that handles the editing of the playlist. Passes the id and the new name selected
-    this.props.onEdit(this.props.playlist.id, this.state.newName);
+    this.props.onEdit(this.props.playlist._id, this.state.newName);
     this.setState({ isEditing: false });
   }
 
@@ -257,7 +257,7 @@ class Playlist extends React.Component {
     });
   };
 
-  // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets evoked in render. This will handle update, delete and read
+  // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets invoked on componentDidMount and after any database operations. This will handle update, delete and read
   getPlaylist = async () => {
     if (this.props.auth0.isAuthenticated) {
       try {
@@ -304,18 +304,55 @@ class Playlist extends React.Component {
     handleNewPlaylistNameChange = (event) => {
       this.setState({ newPlaylistName: event.target.value });
     };
+
+    editPlaylistName = async (playlistId, rpl) => {
+      let pl_id = playlistId;
+      console.log(pl_id);
+      let rplToPut = rpl;
+      console.log(rplToPut);
+      try {
+        // get a token from Auth0
+        const res = await this.props.auth0.getIdTokenClaims();
+        // JWT is the raw part of the token
+        const jwt = res.__raw;
+        // log the token
+        // console.log(jwt);
+        // declare config with headers for axios request
+        const config = {
+          method: 'put',
+          baseURL: SERVER,
+          url: './rename',
+          data: rpl,
+          headers: {
+            "Authorization": `Bearer ${jwt}`,
+            "Data": `${pl_id}`
+          },
+        }
+        // PUT playlist to database with above config
+        let put = await axios(config);
+        console.log(put.data);
+        console.log(`playlist ${pl_id} renamed in database`);
+        this.getPlaylist();
+      } catch (error) {
+        console.log(error.response)
+      }
+    } 
+
     // actual function that edits the playlist name
     handleEditPlaylist = (playlistId, newName) => {
       console.log('I changed the playlist name')
 
       const { playlistsArr } = this.state;
       const updatedPlaylistsArr = playlistsArr.map((playlist) =>
-        playlist.id === playlistId ? { ...playlist, name: newName } : playlist
+        playlist._id === playlistId ? { ...playlist, name: newName } : playlist
       );
+      let rpl = updatedPlaylistsArr.filter(playlist => playlist._id === playlistId);
+      console.log(rpl)
+      this.editPlaylistName(playlistId, rpl);
       this.setState({ playlistsArr: updatedPlaylistsArr });
     };
-    // TODO: function that will delete a playlist from the database
 
+    // function that deletes a playlist from the database
     deletePlaylist = async (playlistId) => {
       let pl_id = playlistId;
       console.log(pl_id);
@@ -361,7 +398,7 @@ class Playlist extends React.Component {
 
     handleAddItemToPlaylist = (playlistId, item) => {
       // Find the playlist with the matching ID
-      const playlist = this.state.playlistsArr.find((p) => p.id === playlistId);
+      const playlist = this.state.playlistsArr.find((p) => p._id === playlistId);
 
       // If a matching playlist is found, push the new item to its array of items
       if (playlist) {
