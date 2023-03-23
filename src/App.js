@@ -4,6 +4,9 @@ import Profile from './Profile';
 import Content from './Content';
 import Header from './Header';
 import Footer from './Footer';
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogOutButton';
+import { withAuth0 } from '@auth0/auth0-react';
 import './App.css';
 
 import {
@@ -17,32 +20,10 @@ class App extends React.Component {
   render() {
     return (
       <>
-          <Router>
-         <Header />
-          <Routes>
-            <Route exact path="/" element={
-              <Content />
-            }
-            ></Route>
-            <Route
-              exact path="/about"
-              element={<About />}
-            >
-            </Route>
-            <Route
-              exact path="/profile"
-              element={
-                <Profile />
-            }
-            >
-            </Route>
-          </Routes>
-          <Footer />
-        </Router>
-
-      </>
-    )
+        {this.props.auth0.isAuthenticated ? <LogoutButton/> : <LoginButton/>}
+        {this.props.auth0.isAuthenticated ? <Content/> : <Profile/>}
+        </>)
   }
 }
 
-export default App;
+          export default withAuth0(App);
