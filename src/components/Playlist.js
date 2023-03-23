@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withAuth0 } from '@auth0/auth0-react';
 import './Playlist.css';
 
 const SERVER = process.env.REACT_APP_SERVER;
@@ -204,11 +205,6 @@ class Playlist extends React.Component {
   }
 
 
-  // let testPlaylist = {
-
-  // }
-
-
   // function that handles adding a new playlist to the database.
   postPlaylist = async (newPlaylist) => {
     try {
@@ -221,7 +217,7 @@ class Playlist extends React.Component {
       // declare config with headers for axios request
       const config = {
         method: 'post',
-        baseURL: process.env.REACT_APP_SERVER,
+        baseURL: SERVER,
         url: '/playlists',
         headers: {
           "Authorization": `Bearer ${jwt}`
@@ -254,21 +250,21 @@ class Playlist extends React.Component {
 
   // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets evoked in render. This will handle update, delete and read
   getPlaylist = async () => {
-    // if (this.props.auth0.isAuthenticated) {
+    if (this.props.auth0.isAuthenticated) {
       try {
         // get a token from Auth0
-        // const res = await this.props.auth0.getIdTokenClaims();
+        const res = await this.props.auth0.getIdTokenClaims();
         // JWT is the raw part of the token
-        // const jwt = res.__raw;
+        const jwt = res.__raw;
         // log the token
-        // console.log(jwt);
+        console.log(jwt);
         // declare config with headers for axios request
         const config = {
           method: 'get',
           baseURL: process.env.REACT_APP_SERVER,
           url: '/playlists',
           headers: {
-            // "Authorization": `Bearer ${jwt}`
+            "Authorization": `Bearer ${jwt}`
           }
         }
         // receive results of axios request using above config
@@ -276,11 +272,13 @@ class Playlist extends React.Component {
         // console log results
         console.log(playlistResults.data);
         console.log('playlist fetched!');
+        this.setState({
+          playlistsArr: playlistResults.data
+        });
     } catch (error) {
       console.log(error);
-    }
+    }}
   }
-// }
   
     // TODO: function that will update the playlist name in the database
 
@@ -343,8 +341,11 @@ class Playlist extends React.Component {
       handleDrop(activePlaylistId, draggedItem, this.state.playlistsArr);
     }
 
-    render() {
+    componentDidMount() {
       this.getPlaylist();
+    }
+
+    render() {
       return (
         <>
           <h1>Your Playlists</h1>
@@ -371,4 +372,4 @@ class Playlist extends React.Component {
     }
   }
 
-export default Playlist;
+export default withAuth0(Playlist);
