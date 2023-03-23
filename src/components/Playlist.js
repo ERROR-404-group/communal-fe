@@ -33,7 +33,7 @@ class PlaylistItem extends React.Component {
 
   handleDelete = () => {
     // function that handles the deleting of the playlist
-    this.props.onDelete(this.props.playlist.id);
+    this.props.onDelete(this.props.playlist._id);
   }
 
   handleDragOver = () => {
@@ -84,11 +84,11 @@ class PlaylistItem extends React.Component {
     return (
       <li
         className='playlist-item'
-        key={playlist.id}
-        data-playlist-id={playlist.id}
+        key={playlist._id}
+        data-playlist-id={playlist._id}
         onDragOver={this.props.onDragOver}
         onDragLeave={this.handleDragLeave}
-        onDrop={() => this.props.onDrop(playlist.id, { playlist })}
+        onDrop={() => this.props.onDrop(playlist._id, { playlist })}
 
       >
         {isEditing ? (
@@ -102,7 +102,7 @@ class PlaylistItem extends React.Component {
             <div className="playlist-header">
               <h3>{playlist.name}</h3>
               <button type="button" onClick={this.toggleEdit}>Edit Playlist</button>
-              <button type="button" onClick={() => this.props.onDelete(playlist.id)}>X</button>
+              <button type="button" onClick={() => this.props.onDelete(playlist._id)}>X</button>
             </div>
             <ul className="list-of-songs">
               {playlist.songs.map(song => (
@@ -221,13 +221,15 @@ class Playlist extends React.Component {
         method: 'post',
         baseURL: SERVER,
         url: '/playlists',
+        data: pl,
         headers: {
           "Authorization": `Bearer ${jwt}`,
           "Data": `${pl}`
         },
       }
       // POST playlist to database with above config
-      await axios(config);
+      let post = await axios(config);
+      console.log(post);
       // console.log(createdPlaylist.data);
       console.log('I created a new playlist')
     } catch (error) {
@@ -271,6 +273,7 @@ class Playlist extends React.Component {
             "From": `${this.props.userToken.email}`
           }
         }
+        console.log(this.props.userToken.email);
         // receive results of axios request using above config
         const playlistResults = await axios(config);
         // console log results
@@ -309,14 +312,44 @@ class Playlist extends React.Component {
     };
     // TODO: function that will delete a playlist from the database
 
+    deletePlaylist = async (playlistId) => {
+      let pl_id = playlistId;
+      console.log(pl_id);
+      try {
+        // get a token from Auth0
+        const res = await this.props.auth0.getIdTokenClaims();
+        // JWT is the raw part of the token
+        const jwt = res.__raw;
+        // log the token
+        // console.log(jwt);
+        // declare config with headers for axios request
+        const config = {
+          method: 'delete',
+          baseURL: SERVER,
+          url: '/playlists',
+          headers: {
+            "Authorization": `Bearer ${jwt}`,
+            "Data": `${pl_id}`
+          },
+        }
+        // POST playlist to database with above config
+        await axios(config);
+        // console.log(createdPlaylist.data);
+        console.log('Playlist deleted from database')
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+  
     // function that handles deleting a playlist from the database and state
     handleDeletePlaylist = (playlistId) => {
       console.log('I deleted the playlist');
 
       const { playlistsArr } = this.state;
       const updatedPlaylistsArr = playlistsArr.filter(
-        (playlist) => playlist.id !== playlistId
+        (playlist) => playlist._id !== playlistId
       );
+      this.deletePlaylist(playlistId);
       this.setState({ playlistsArr: updatedPlaylistsArr });
     };
 
@@ -364,7 +397,7 @@ class Playlist extends React.Component {
                 playlist={playlist}
                 updatePlaylist={this.updatePlaylist}
                 onEdit={this.handleEditPlaylist}
-                onDelete={() => this.handleDeletePlaylist(playlist.id)}
+                onDelete={() => this.handleDeletePlaylist(playlist._id)}
                 onEnter={this.props.onEnter}
                 onExit={this.props.onExit}
                 onChange={this.props.onChange}
