@@ -34,7 +34,6 @@ class Content extends React.Component {
   // function to update the playlist will be called here when the user drops a song into a playlist.
 
   handleDrop = (playlistId, playlists) => {
-    console.log('im when the user drops a song')
     playlists.playlist.songs.push(this.state.itemBeingDragged);
     this.setState({ itemBeingDragged: null });
   }
