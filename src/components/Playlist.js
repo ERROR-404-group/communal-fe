@@ -152,7 +152,6 @@ class SongItem extends React.Component {
 
   render() {
     const { song } = this.props;
-    const { showDeleteButton } = this.state;
     return (
 
       <li
