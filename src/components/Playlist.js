@@ -92,11 +92,18 @@ class PlaylistItem extends React.Component {
 
       >
         {isEditing ? (
+            <>
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={newName} onChange={this.handleNameChange} />
             <button type="submit">Save</button>
             <button type="button" onClick={this.toggleEdit}>Cancel</button>
           </form>
+           <ul className="list-of-songs">
+             {playlist.songs.map(song => (
+               <SongItem className='playlist-item' key={song.id} isEditing={this.state.isEditing} song={song} onSongDelete={this.onSongDelete} />
+             ))}
+           </ul>
+         </>
         ) : (
           <>
             <div className="playlist-header">
@@ -156,7 +163,7 @@ class SongItem extends React.Component {
       >
 
         {song.title} - {song.artist} - {song.album}
-        {showDeleteButton && (
+        {this.props.isEditing && (
           <button className='delete-button' onClick={() => this.props.onSongDelete(song.id)}>
             X
           </button>
@@ -353,7 +360,7 @@ class Playlist extends React.Component {
 
   // function that deletes a playlist from the database
   deletePlaylist = async (playlistId) => {
-    let pl_id = playlistId;
+   let pl_id = playlistId;
     console.log(pl_id);
     try {
       // get a token from Auth0
@@ -383,7 +390,7 @@ class Playlist extends React.Component {
   handleDeletePlaylist = (playlistId) => {
     console.log('I deleted the playlist');
 
-    const { playlistsArr } = this.state;
+     const { playlistsArr } = this.state;
     const updatedPlaylistsArr = playlistsArr.filter(
       (playlist) => playlist._id !== playlistId
     );

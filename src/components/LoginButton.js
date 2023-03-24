@@ -4,7 +4,7 @@ import React from "react";
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
-  return <button className='right-side' onClick={() => loginWithRedirect()}>Let's Get TuneTastic!</button>;
+  return <button className='right-btn' onClick={() => loginWithRedirect()}>Let's Get TuneTastic!</button>;
 };
 
 export default LoginButton;
