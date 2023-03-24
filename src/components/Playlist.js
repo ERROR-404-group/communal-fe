@@ -292,7 +292,7 @@ class Playlist extends React.Component {
   updatePlaylist = (updatedPlaylist) => {
     const { playlistsArr } = this.state;
     const updatedPlaylistsArr = playlistsArr.map((playlist) =>
-      playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
+      playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
     );
     this.setState({ playlistsArr: updatedPlaylistsArr });
   };
