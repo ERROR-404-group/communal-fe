@@ -106,6 +106,12 @@ class Search extends Component {
   render() {
     return (
       <div className='results-table'>
+        <h1 className="title">
+            <span className="title-word title-word-1">Search </span>
+            <span className="title-word title-word-2">your </span>
+            <span className="title-word title-word-3">favorite </span>
+            <span className="title-word title-word-4">Booty Music</span>
+            </h1>
       <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -122,6 +128,21 @@ class Search extends Component {
         songs={this.state.songsReturnedArray} 
         dragStart={this.props.dragStart}
         />
+            <div class="muzieknootjes">
+            <div class="noot-1">
+              &#9835; &#9833;
+            </div>
+            <div class="noot-2">
+              &#9833;
+
+            </div>
+            <div class="noot-3">
+              &#9839; &#9834;
+            </div>
+            <div class="noot-4">
+              &#9834;
+            </div>
+          </div>
           </div>
       
     );
