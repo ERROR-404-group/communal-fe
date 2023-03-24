@@ -44,13 +44,14 @@ class SongList extends React.Component {
 
   render() {
     const { dragging } = this.state;
+    console.log(this.props.songs);
     return (
       <ul className='search-results'>
         {this.props.songs.map((song, index) => (
 
           <li className={`search-item draggable ${dragging ? 'dragging' : ''}`} 
-          key={index}
           draggable="true"
+          key={index}
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}
           onDragStart={(e) => this.handleDragStart(e, song)}
@@ -128,21 +129,7 @@ class Search extends Component {
         songs={this.state.songsReturnedArray} 
         dragStart={this.props.dragStart}
         />
-            <div className="muzieknootjes">
-            <div className="noot-1">
-              &#9835; &#9833;
-            </div>
-            <div className="noot-2">
-              &#9833;
-
-            </div>
-            <div className="noot-3">
-              &#9839; &#9834;
-            </div>
-            <div className="noot-4">
-              &#9834;
-            </div>
-          </div>
+            
           </div>
       
     );
