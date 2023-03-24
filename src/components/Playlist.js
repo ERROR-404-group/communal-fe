@@ -99,8 +99,8 @@ class PlaylistItem extends React.Component {
             <button type="button" onClick={this.toggleEdit}>Cancel</button>
           </form>
            <ul className="list-of-songs">
-             {playlist.songs.map(song => (
-               <SongItem className='playlist-item' key={song.id} isEditing={this.state.isEditing} song={song} onSongDelete={this.onSongDelete} />
+             {playlist.songs.map((song, index) => (
+               <SongItem className='playlist-item' key={index} isEditing={this.state.isEditing} song={song} onSongDelete={this.onSongDelete} />
              ))}
            </ul>
          </>
@@ -112,8 +112,8 @@ class PlaylistItem extends React.Component {
               <button type="button" onClick={() => this.props.onDelete(playlist._id)}>X</button>
             </div>
             <ul className="list-of-songs">
-              {playlist.songs.map(song => (
-                <SongItem className='playlist-item' key={song.id} song={song} onSongDelete={this.onSongDelete} />
+              {playlist.songs.map((song, index) => (
+                <SongItem className='playlist-item' key={index} song={song} onSongDelete={this.onSongDelete} />
               ))}
             </ul>
           </>
@@ -156,7 +156,7 @@ class SongItem extends React.Component {
 
       <li
         className='song-item'
-        key={song.id + 10}
+        key={song.id}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -270,7 +270,6 @@ class Playlist extends React.Component {
         // JWT is the raw part of the token
         const jwt = res.__raw;
         // log the token
-        console.log(jwt);
         // declare config with headers for axios request
         const config = {
           method: 'get',
@@ -281,12 +280,9 @@ class Playlist extends React.Component {
             "From": `${this.props.userToken.email}`
           }
         }
-        console.log(this.props.userToken.email);
         // receive results of axios request using above config
         const playlistResults = await axios(config);
         // console log results
-        console.log(playlistResults.data);
-        console.log('playlist fetched!');
         this.setState({
           playlistsArr: playlistResults.data
         });
@@ -311,9 +307,7 @@ class Playlist extends React.Component {
 
   editPlaylist = async (playlistId, rpl) => {
     let pl_id = playlistId;
-    console.log(pl_id);
-    let rplToPut = rpl;
-    console.log(rplToPut);
+    // let rplToPut = rpl;
     try {
       // get a token from Auth0
       const res = await this.props.auth0.getIdTokenClaims();
@@ -333,10 +327,10 @@ class Playlist extends React.Component {
         },
       }
       // PUT playlist to database with above config
+      // eslint-disable-next-line no-unused-vars
       let putName = await axios(config);
-      // console.log(put.data);
+      // console.log(putName);
       // console.log(`playlist ${pl_id} updated in database`);
-      console.log(putName);
     } catch (error) {
       console.log(error.response)
     }
@@ -344,14 +338,12 @@ class Playlist extends React.Component {
 
   // actual function that edits the playlist name
   handleEditPlaylist = (playlistId, newName) => {
-    console.log('Playlist updated.');
     const { playlistsArr } = this.state;
     const updatedPlaylistsArr = playlistsArr.map((playlist) =>
       playlist._id === playlistId ? { ...playlist, name: newName } : playlist
     );
     // get the updated playlist object from the array using filter
     let upl = updatedPlaylistsArr.filter(playlist => playlist._id === playlistId);
-    console.log(upl)
     // since filter gives us the updated playlist object inside an array, extract the object to send to the server
     this.editPlaylist(playlistId, upl[0]);
     this.setState({ playlistsArr: updatedPlaylistsArr });
@@ -441,11 +433,11 @@ class Playlist extends React.Component {
         
         <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
         <ul className="list-of-playlists">
-          {this.state.playlistsArr.map((playlist) => (
+          {this.state.playlistsArr.map((playlist, index) => (
             <PlaylistItem
               onDragOver={this.handleDragOver}
               onDrop={this.props.handleDrop}
-              key={playlist.id}
+              key={index}
               className="playlist-item"
               playlist={playlist}
               updatePlaylist={this.updatePlaylist}
@@ -458,17 +450,17 @@ class Playlist extends React.Component {
           ))}
         </ul>
         <div className="muzieknootjes">
-            <div class="noot-1">
+            <div className="noot-1">
               &#9835; &#9833;
             </div>
-            <div class="noot-2">
+            <div className="noot-2">
               &#9833;
 
             </div>
-            <div class="noot-3">
+            <div className="noot-3">
               &#9839; &#9834;
             </div>
-            <div class="noot-4">
+            <div className="noot-4">
               &#9834;
             </div>
           </div>
