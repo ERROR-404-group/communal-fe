@@ -13,8 +13,8 @@
 .right-side {
   display: flex;
   height: 100vh;
-  width: 40%;
-  border: 1px solid black;
+  width: 50%;
+  transform: translate(-15%, -5%);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -23,18 +23,21 @@
 }
 
 .right-side h2 {
-  font-size: 3.5rem;
+  font-size: 6rem;
 }
 
 .right-side p {
   font-size: 1rem;
   width: 50%;
+  line-height: 30px;
 }
 
 
-.right-side button {
+.right-btn {
   height: 50px;
-  width: 200px;
+  width: 50%;
+  background-color: white;
+  border-radius: 20px;
 }
 
 .right-side button:hover {
