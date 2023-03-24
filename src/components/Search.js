@@ -87,7 +87,11 @@ class Search extends Component {
     // do something with the search term, such as send it to a search API
     try {
       let searchResults = await axios.get(`${process.env.REACT_APP_SERVER}/search?q=${this.state.searchTerm}`);
+      if (searchResults.data !== "search unavailable") {
       this.setState({ songsReturnedArray: searchResults.data });
+      } else {
+        window.alert("Search unavailable. Please try again later.");
+      }
     } catch (error) {
       console.log(error);
     }
