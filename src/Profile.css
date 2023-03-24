@@ -1,0 +1,156 @@
+.landing-image {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.note {
+  width: 100px;
+  height: 100px;
+}
+
+.right-side {
+  display: flex;
+  height: 100vh;
+  width: 40%;
+  border: 1px solid black;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.right-side h2 {
+  font-size: 3.5rem;
+}
+
+.right-side p {
+  font-size: 1rem;
+  width: 50%;
+}
+
+
+.right-side button {
+  height: 50px;
+  width: 200px;
+}
+
+.right-side button:hover {
+  cursor: pointer;
+}
+
+img {
+  height: 500px;
+  width: 300px;
+}
+
+.list-of-notes {
+  display: flex;
+  transform: translateY(150px);
+}
+
+.note {
+  list-style: none;
+  font-size: 4rem;
+  height: 96px;
+  width: 30px;
+  position: absolute;
+  left: 40%;
+  font-size: 35px;
+  color: white;
+  animation-name: notes;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  opacity: 0;
+}
+
+.note:first-child {
+  left: 35%;
+}
+
+.note:last-child {
+  left: 45%;
+}
+
+.note:nth-child(2n) {
+  animation-delay: 1s;
+}
+.note:nth-child(3n) {
+  animation-delay: 2s;
+
+}
+
+@keyframes notes {
+  0% {
+    font-size: 35px;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    font-size: 60px;
+    margin-top: -150px;
+    opacity: 0;
+  }
+}
+
+.right-side {
+  position: relative;
+}
+
+.right-side h2 {
+  color: #fff;
+  font-size: 6em;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  margin-bottom: 200px;
+  margin-left:430px;
+  text-shadow: rgba(2, 0, 0, 0.171) 12px 10px 2px;
+}
+
+.right-side h2:nth-child(1) {
+  color: transparent;
+  -webkit-text-stroke: 2px black;
+}
+
+.right-side h2:nth-child(2) {
+  color: blue;
+  animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 45%,
+      16% 44%,
+      33% 50%,
+      54% 60%,
+      70% 61%,
+      84% 59%,
+      100% 52%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      0% 60%,
+      15% 65%,
+      34% 66%,
+      51% 62%,
+      67% 50%,
+      84% 45%,
+      100% 46%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}

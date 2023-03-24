@@ -150,7 +150,7 @@ class SongItem extends React.Component {
 
       <li
         className='song-item'
-        key={song.id}
+        key={song.id + 10}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -228,6 +228,7 @@ class Playlist extends React.Component {
         },
       }
       // POST playlist to database with above config
+
       let post = await axios(config);
       console.log(post);
       // console.log(createdPlaylist.data);
@@ -254,7 +255,7 @@ class Playlist extends React.Component {
     });
   };
 
-  // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets invoked on componentDidMount and after any database operations. This will handle update, delete and read
+  // function that will be called on page load. It will fetch the playlists from the database that match the users createdBy email. It will then save the array of playlists to the state as playlistsArr. It gets invoked on componentDidMount
   getPlaylist = async () => {
     if (this.props.auth0.isAuthenticated) {
       try {
@@ -423,7 +424,15 @@ class Playlist extends React.Component {
   render() {
     return (
       <>
-        <h1>Your Playlists</h1>
+        <div className="container">
+          <h1 className="title">
+            <span className="title-word title-word-1">This </span>
+            <span className="title-word title-word-2">is </span>
+            <span className="title-word title-word-3">my </span>
+            <span className="title-word title-word-4">Playlist</span>
+          </h1>
+        </div>
+        
         <button className='add-btn' onClick={this.handleAddPlaylist}>Create New Playlist</button>
         <ul className="list-of-playlists">
           {this.state.playlistsArr.map((playlist) => (
@@ -442,6 +451,21 @@ class Playlist extends React.Component {
             />
           ))}
         </ul>
+        <div class="muzieknootjes">
+            <div class="noot-1">
+              &#9835; &#9833;
+            </div>
+            <div class="noot-2">
+              &#9833;
+
+            </div>
+            <div class="noot-3">
+              &#9839; &#9834;
+            </div>
+            <div class="noot-4">
+              &#9834;
+            </div>
+          </div>
       </>
     );
   }
